@@ -58,13 +58,13 @@ def fetch_prices(symbol, out_name):
         urllib2.quote(symbol),
         urllib2.quote(now_datetime, '+')
     )
-    print "Fetching {} ...".format(symbol)
-    print symbol_url
+    print("Fetching {} ...".format(symbol))
+    print(symbol_url)
 
     try:
         f = urllib2.urlopen(symbol_url)
         with open(out_name, 'w') as fin:
-            print >> fin, f.read()
+            print(fin, f.read())
     except urllib2.HTTPError:
         print "Failed when fetching {}".format(symbol)
         return False
