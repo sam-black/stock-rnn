@@ -28,7 +28,7 @@ RUN apt-get update && \
         apt-get install libnvinfer4=4.1.2-1+cuda9.0
 
 ARG USE_PYTHON_3_NOT_2=True
-ARG PY_SUFFIX=${USE_PYTHON_3_NOT_2:+3}
+ARG _PY_SUFFIX=${USE_PYTHON_3_NOT_2:+3}
 ARG PYTHON=python${_PY_SUFFIX}
 ARG PIP=pip${_PY_SUFFIX}
 
@@ -43,11 +43,12 @@ RUN ${PIP} install --upgrade \
 ARG TF_PACKAGE=tensorflow-gpu
 RUN ${PIP} install ${TF_PACKAGE}
 
+RUN chmod a+rwx /etc/bash.bashrc
 
 COPY . /app
 
 RUN apt-get update
-RUN pip3 install --upgrade pip
-RUN pip3 install -r /app/requirements.txt
+RUN ${PIP} install --upgrade pip
+RUN ${PIP} install -r /app/requirements.txt
 
-CMD ["python", "app/main.py" ,"--stock_symbol=SP500", "--train", "--input_size=1", "--lstm_size=128", "--max_epoch=50"]
+CMD ["python3", "app/main.py" ,"--stock_symbol=SP500", "--train", "--input_size=1", "--lstm_size=128", "--max_epoch=50"]

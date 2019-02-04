@@ -23,7 +23,7 @@ class StockDataSet(object):
         self.normalized = normalized
 
         # Read csv file
-        raw_df = pd.read_csv(os.path.join("data", "%s.csv" % stock_sym))
+        raw_df = pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "%s.csv" % stock_sym))
 
         # Merge into one sequence
         if close_price_only:
